@@ -15,11 +15,11 @@
 	<img id="center" src="reel_center.png" style="left:360px;top:-1550px;clip:rect(1600,160,2080,0);position:absolute;">
 	<img id="right" src="reel_right.png" style="left:520px;top:-1550px;clip:rect(1600,160,2080,0);position:absolute;">
 	
-	<button type="Button" OnClick="stop(1)" style="left:200px;top:550px;position:absolute;">Stop</button>
-	<button type="Button" OnClick="stop(2)" style="left:360px;top:550px;position:absolute;">Stop</button>
-	<button type="Button" OnClick="stop(3)" style="left:520px;top:550px;position:absolute;">Stop</button>
+	<button type="Button" OnClick="stop(1)" style="left:200px;top:550px;position:absolute;" accesskey="1">Stop</button>
+	<button type="Button" OnClick="stop(2)" style="left:360px;top:550px;position:absolute;" accesskey="2">Stop</button>
+	<button type="Button" OnClick="stop(3)" style="left:520px;top:550px;position:absolute;" accesskey="3">Stop</button>
 	
-	<button type="Button" OnClick="start()" style="left:440px;top:600px;position:absolute;">Start!</button>
+	<button type="Button" OnClick="start()" style="left:440px;top:600px;position:absolute;" accesskey="5">Start!</button>
 	
 	<script>
 	
@@ -278,6 +278,7 @@
 		function replay(){
 			document.getElementById("result").innerHTML="リプレイ";
 			started=false;
+			money+=use;
 			setTimeout(start(),10000);
 			return;
 		}
