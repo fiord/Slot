@@ -7,9 +7,6 @@
 <!-- 画像サイズは160x3680 -->
 	<div id="result" align="center">スロットゲーム</div>
 	<div id="money" align="right">所持コイン:50枚</div>
-	<p id="state1" align="right"> </p>
-	<p id="state2" align="right"> </p>
-	<p id="state3" align="right"> </p>
 	
 	<img id="left" src="reel_left.png" style="left:200px;top:-1550px;clip:rect(1600,160,2080,0);position:absolute;"/>
 	<img id="center" src="reel_center.png" style="left:360px;top:-1550px;clip:rect(1600,160,2080,0);position:absolute;">
@@ -57,6 +54,9 @@
 		var verocity_center=-160*3/100.0;
 		var verocity_right=160*3/100.0;
 		
+		//残額0でリプレイを引くとGAMEOVER扱いになる対策
+		var repFlag=false;
+		
 		onload=function(){
 			money=input_money();
 			money_update();
@@ -88,6 +88,7 @@
 			
 			//変数の初期化
 			started=true;
+			repFlag=false;
 			flag_left=flag_center=flag_right=false;
 			stop_left=stop_center=stop_right=false;
 			end_left=end_center=end_right=0;
@@ -149,7 +150,7 @@
 					//終了処理
 					end();
 					money_update();
-					if(money<=0){
+					if(money<=0&&!repFlag){
 						document.getElementById("result").innerHTML+="	GAMEOVER";
 						setTimeout("input_money()",1000);
 					}
@@ -193,9 +194,10 @@
 					seven(6)			2,4
 			*/
 			var array_left=[0,1,6,2,6,0,1,3,0,2,0,1,5,4,4,0,1,2,3,2,0];
-			var up_left=Math.floor(-cur_left/160);
-			var mid_left=array_left[(up_left+1)%20],low_left=array_left[(up_left+2)%20];
-			up_left=array_left[up_left];
+			var index_left=Math.floor(-cur_left/160+1e-6);
+			var up_left=array_left[index_left];
+			var mid_left=array_left[(index_left+1)%20];
+			var low_left=array_left[(index_left+2)%20];
 			/*
 			center:	rep(0)			1,6,11,16
 						banana(1)		2,7,12,17
@@ -206,9 +208,10 @@
 						seven(6)			3,4
 			*/
 			var array_center=[2,0,1,6,6,2,0,1,3,4,2,0,1,4,5,4,0,1,3,4,2];
-			var up_center=Math.floor(-cur_center/160);
-			var mid_center=array_center[(up_center+1)%20],low_center=array_center[(up_center+2)%20];
-			up_center=array_center[up_center];
+			var index_center=Math.floor(-cur_center/160+1e-6);
+			var up_center=array_center[index_center];
+			var mid_center=array_center[(index_center+1)%20];
+			var low_center=array_center[(index_center+2)%20];
 			/*
 			right:	rep(0)			2,7,12,17
 						banana(1)		1,6,11,16
@@ -219,13 +222,10 @@
 						seven(6)			4
 			*/
 			var array_right=[4,1,0,2,6,4,1,0,2,3,4,1,0,2,5,4,1,0,2,3,4];
-			var up_right=Math.floor(-cur_right/160);
-			var mid_right=array_right[(up_right+1)%20],low_right=array_right[(up_right+2)%20];
-			up_right=array_right[up_right];
-			
-			document.getElementById("state1").innerHTML=up_left+" "+up_center+" "+up_right;
-			document.getElementById("state2").innerHTML=mid_left+" "+mid_center+" "+mid_right;
-			document.getElementById("state3").innerHTML=low_left+" "+low_center+" "+low_right;
+			var index_right=Math.floor(-cur_right/160+1e-6);
+			var up_right=array_right[index_right];
+			var mid_right=array_right[(index_right+1)%20];
+			var low_right=array_right[(index_right+2)%20];
 			
 			//mid-mid-mid
 			if(equals(mid_left,mid_center,mid_right)){
@@ -278,6 +278,7 @@
 		function replay(){
 			document.getElementById("result").innerHTML="リプレイ";
 			started=false;
+			repFlag=true;
 			flag_left=flag_center=flag_right=false;
 			stop_left=stop_center=stop_right=false;
 			end_left=end_center=end_right=0;
@@ -301,21 +302,21 @@
 		}
 		
 		//ショートカットキーの実装
-		$(document).keydown(function(e){
+		element.onkeypress=function(e){
 			switch (e.keyCode) {
 				case 49:// Key:1
-            	$("left_button").click();
-            	break;
-            case 50:// Key:2
-            	$("center_button").click();
-            	break;
-            case 51:// Key:3
-            	$("right_button").click();
-            	break;
-            case 53:// Key:5
-            	$("start_button").click();
-            	break;
- 	   	}
- 	   });
+					$("left_button").click();
+					break;
+				case 50:// Key:2
+					$("center_button").click();
+					break;
+				case 51:// Key:3
+					$("right_button").click();
+					break;
+				case 53:// Key:5
+					$("start_button").click();
+					break;
+			}
+		}
 	</script>
 </body>
