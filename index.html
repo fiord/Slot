@@ -3,9 +3,10 @@
 	<title>スロット</title>
 	<link rel="icon" type="image/png" href="blue.png">
 </head>
-<body>
+<body onload="init()">
 <!-- 画像サイズは160x3680 -->
 	<div id="result" align="center">スロットゲーム</div>
+	<div id="time" align="right">残り時間:60秒</div>
 	<div id="money" align="right">所持コイン:50枚</div>
 	
 	<img id="left" src="reel_left.png" style="left:200px;top:-1550px;clip:rect(1600,160,2080,0);position:absolute;"/>
@@ -57,9 +58,23 @@
 		//残額0でリプレイを引くとGAMEOVER扱いになる対策
 		var repFlag=false;
 		
-		onload=function(){
+		//残り時間
+		var time_left=60;
+		var gaming=false;
+		
+		function init(){
 			money=input_money();
 			money_update();
+			var a=setInterval(function(){
+				time_left-=1;
+				document.getElementById("time").innerHTML="残り時間:"+time_left+"秒";
+				if(time_left==0){
+					finish_flag=true;
+					if(!gaming)	finish();
+					clearInterval(a);
+				}
+			},1000);
+			return;
 		}
 		
 		function input_money(){
@@ -88,6 +103,7 @@
 			
 			//変数の初期化
 			started=true;
+			gaming=true;
 			repFlag=false;
 			flag_left=flag_center=flag_right=false;
 			stop_left=stop_center=stop_right=false;
@@ -151,14 +167,21 @@
 					end();
 					money_update();
 					if(money<=0&&!repFlag){
-						document.getElementById("result").innerHTML+="	GAMEOVER";
-						setTimeout("input_money()",1000);
+						setTimeout("window.alert('GAMEOVER')",1000);
+						setTimeout("init()",5000);
 					}
 					started=false;
+					gaming=false;
+					if(time_left<=0&&!repFlag)	finish();
 					clearInterval(func);
 					return;
 				}
 			},10);
+		}
+		
+		function finish(){
+			window.alert("ゲーム終了。残りコイン数は"+money+"枚です。");
+			init();
 		}
 		
 		function stop(num){
