@@ -9,9 +9,9 @@
 	<div id="time" align="right">残り時間:60秒</div>
 	<div id="money" align="right">所持コイン:50枚</div>
 	
-	<img id="left" src="reel_left.png" style="left:200px;top:-1550px;clip:rect(1600,160,2080,0);position:absolute;"/>
-	<img id="center" src="reel_center.png" style="left:360px;top:-1550px;clip:rect(1600,160,2080,0);position:absolute;">
-	<img id="right" src="reel_right.png" style="left:520px;top:-1550px;clip:rect(1600,160,2080,0);position:absolute;">
+	<img id="left" src="reel_left.png" style="left:370px;top:50px;clip:rect(0,160,480,0);position:absolute;"/>
+	<img id="center" src="reel_center.png" style="left:530px;top:50px;clip:rect(0,160,480,0);position:absolute;">
+	<img id="right" src="reel_right.png" style="left:690px;top:50px;clip:rect(0,160,480,0);position:absolute;">
 	
 	<button type="Button" OnClick="stop(1)" style="left:200px;top:550px;position:absolute;" id="left_button">Stop</button>
 	<button type="Button" OnClick="stop(2)" style="left:360px;top:550px;position:absolute;" id="center_button">Stop</button>
@@ -46,14 +46,14 @@
 		var right=document.getElementById("right");
 		
 		//現在位置
-		var cur_left=-1600;
-		var cur_center=-1600;
-		var cur_right=-1600;
+		var cur_left=0;
+		var cur_center=0;
+		var cur_right=0;
 		
 		//速度指定
-		var verocity_left=160*3/100.0;
-		var verocity_center=-160*3/100.0;
-		var verocity_right=160*3/100.0;
+		var verocity_left=160*5/100.0;
+		var verocity_center=-160*5/100.0;
+		var verocity_right=160*5/100.0;
 		
 		//残額0でリプレイを引くとGAMEOVER扱いになる対策
 		var repFlag=false;
@@ -62,10 +62,18 @@
 		var time_left=60;
 		var gaming=false;
 		
+		//GAMEOVER時に時間の減少を止める用
+		var gameover_flag=false;
+		
 		function init(){
 			money=input_money();
 			money_update();
+			time_left=60;
+			gameover_flag=false;
 			var a=setInterval(function(){
+				if(gameover_flag){
+					clearInterval(a);
+				}
 				time_left-=1;
 				document.getElementById("time").innerHTML="残り時間:"+time_left+"秒";
 				if(time_left==0){
@@ -79,6 +87,8 @@
 		
 		function input_money(){
 			var ret=prompt("所持コインを入力してください。");
+			if(ret==null)	return 50;
+			if(ret=="")	return 50;
 			return ret;
 		}
 		
@@ -115,7 +125,7 @@
 		
 			
 			//境界判定に使用
-			var bottom=160*20;
+			var bottom=160*21;
 			
 			var func=setInterval(function(){
 				//現在位置の移動
@@ -167,8 +177,9 @@
 					end();
 					money_update();
 					if(money<=0&&!repFlag){
+						gameover_flag=true;
 						setTimeout("window.alert('GAMEOVER')",1000);
-						setTimeout("init()",5000);
+						setTimeout("init()",2000);
 					}
 					started=false;
 					gaming=false;
@@ -194,7 +205,7 @@
 			else if(num==2){
 				//centerを止める
 				flag_center=true;
-				var move=(160*20+cur_center)%160;
+				var move=(160*21+cur_center)%160;
 				end_center=cur_center-move;
 			}
 			else if(num==3){
@@ -208,47 +219,53 @@
 		
 		function end(){
 			/*
-			left: rep(0)			0,5,8,10,15
-					banana(1)		1,6,11,16
-					watermelon(2)	3,9,17,19
-					orange(3)		7,18
-					cherry(4)		13,14
-					bar(5)			12
-					seven(6)			2,4
+			left: 	rep(0)			2,7,11,16,19,
+					orange(1)		1,6,9,13,17,
+					watermelon(2)	15,20
+					apple(3)		8,
+					bell(4)			10,12,
+					grape(5)		14,21
+					cherry(6)		18
+					bar(7)			4,5
+					seven(8)		3
 			*/
-			var array_left=[0,1,6,2,6,0,1,3,0,2,0,1,5,4,4,0,1,2,3,2,0];
+			var array_left=[1,0,8,7,7,1,0,3,1,4,0,4,1,5,2,0,1,6,0,2,5];
 			var index_left=Math.floor(-cur_left/160+1e-6);
 			var up_left=array_left[index_left];
-			var mid_left=array_left[(index_left+1)%20];
-			var low_left=array_left[(index_left+2)%20];
+			var mid_left=array_left[(index_left+1)%21];
+			var low_left=array_left[(index_left+2)%21];
 			/*
-			center:	rep(0)			1,6,11,16
-						banana(1)		2,7,12,17
-						watermelon(2)	0,5,10
-						orange(3)		8,18
-						cherry(4)		9,13,15,19
-						bar(5)			14
-						seven(6)			3,4
+			center:	rep(0)			3,8,13,18,21
+					orange(1)		1,6,11,16,19,
+					watermelon(2)	9,10,
+					apple(3)		15,
+					bell(4)			12,
+					grape(5)		14,20,
+					cherry(6)		5,
+					bar(7)			7,17,
+					seven(8)		2,4,
 			*/
-			var array_center=[2,0,1,6,6,2,0,1,3,4,2,0,1,4,5,4,0,1,3,4,2];
+			var array_center=[1,8,0,8,6,1,7,0,2,2,1,4,0,5,3,1,7,0,1,5,0];
 			var index_center=Math.floor(-cur_center/160+1e-6);
 			var up_center=array_center[index_center];
-			var mid_center=array_center[(index_center+1)%20];
-			var low_center=array_center[(index_center+2)%20];
+			var mid_center=array_center[(index_center+1)%21];
+			var low_center=array_center[(index_center+2)%21];
 			/*
-			right:	rep(0)			2,7,12,17
-						banana(1)		1,6,11,16
-						watermelon(2)	3,8,13,18
-						orange(3)		9,19
-						cherry(4)		0,5,10,15
-						bar(5)			14
-						seven(6)			4
+			right: 	rep(0)			4,6,10,14,18,21
+					orange(1)		1,5,9,13,17,
+					watermelon(2)	2,8,
+					apple(3)		11,
+					bell(4)			12,
+					grape(5)		15,20,
+					cherry(6)		19,
+					bar(7)			7,16,
+					seven(8)		3,
 			*/
-			var array_right=[4,1,0,2,6,4,1,0,2,3,4,1,0,2,5,4,1,0,2,3,4];
+			var array_right=[1,2,8,0,1,0,7,2,1,0,3,4,1,0,5,7,1,0,6,5,0];
 			var index_right=Math.floor(-cur_right/160+1e-6);
 			var up_right=array_right[index_right];
-			var mid_right=array_right[(index_right+1)%20];
-			var low_right=array_right[(index_right+2)%20];
+			var mid_right=array_right[(index_right+1)%21];
+			var low_right=array_right[(index_right+2)%21];
 			
 			//mid-mid-mid
 			if(equals(mid_left,mid_center,mid_right)){
@@ -306,7 +323,7 @@
 			stop_left=stop_center=stop_right=false;
 			end_left=end_center=end_right=0;
 			money+=use;
-			setTimeout("start()",1500);
+			setTimeout("start()",750);
 			return;
 		}
 		
