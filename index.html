@@ -13,11 +13,10 @@
 	<img id="center" src="reel_center.png" style="left:530px;top:50px;clip:rect(0,160,480,0);position:absolute;">
 	<img id="right" src="reel_right.png" style="left:690px;top:50px;clip:rect(0,160,480,0);position:absolute;">
 	
-	<button type="Button" OnClick="stop(1)" style="left:200px;top:550px;position:absolute;" id="left_button">Stop</button>
-	<button type="Button" OnClick="stop(2)" style="left:360px;top:550px;position:absolute;" id="center_button">Stop</button>
-	<button type="Button" OnClick="stop(3)" style="left:520px;top:550px;position:absolute;" id="right_button">Stop</button>
-	
-	<button type="Button" OnClick="start()" style="left:440px;top:600px;position:absolute;" id="start_button">Start!</button>
+	<img id="btn_left" src="btn_left0.png" style="left:390px;top:550px;position:absolute;width=50%;height=50%;" onmousedown="stop(1)" onmouseup="btn_release(1)">
+	<img id="btn_center" src="btn_center0.png" style="left:550px;top:550px;position:absolute;width=50%;height=50%;" onmousedown="stop(2)" onmouseup="btn_release(2)">
+	<img id="btn_right" src="btn_right0.png" style="left:710px;top:550px;position:absolute;width=50%;height=50%;" onmousedown="stop(3)" onmouseup="btn_release(3)">
+	<img id="btn_start" src="button_start1.png" style="left:900px;top:450px;position:absolute;" onmousedown="start()" onmouseup="btn_release(4)">
 	
 	<script>
 	
@@ -51,9 +50,9 @@
 		var cur_right=0;
 		
 		//速度指定
-		var verocity_left=160*5/100.0;
-		var verocity_center=-160*5/100.0;
-		var verocity_right=160*5/100.0;
+		var verocity_left=160*18/100.0;
+		var verocity_center=-160*15/100.0;
+		var verocity_right=160*20/100.0;
 		
 		//残額0でリプレイを引くとGAMEOVER扱いになる対策
 		var repFlag=false;
@@ -103,6 +102,7 @@
 			}
 			
 			document.getElementById("result").innerHTML="スロット";
+			document.getElementById("btn_start").src="button_start2.png";
 			
 			money-=use;
 			if(money<0){
@@ -199,20 +199,43 @@
 			if(num==1){
 				//leftを止める
 				flag_left=true;
+				document.getElementById("btn_left").src="btn_left1.png";
 				var move=(-cur_left)%160;
 				end_left=cur_left+move;
 			}
 			else if(num==2){
 				//centerを止める
 				flag_center=true;
+				document.getElementById("btn_center").src="btn_center1.png";
 				var move=(160*21+cur_center)%160;
 				end_center=cur_center-move;
 			}
 			else if(num==3){
 				//rightを止める
 				flag_right=true;
+				document.getElementById("btn_right").src="btn_right1.png";
 				var move=(-cur_right)%160;
 				end_right=cur_right+move;
+			}
+			return;
+		}
+		
+		function btn_release(num){
+			if(num==1){
+				//leftの画像を戻す
+				document.getElementById("btn_left").src="btn_left0.png";
+			}
+			else if(num==2){
+				//centerの画像を戻す
+				document.getElementById("btn_center").src="btn_center0.png";
+			}
+			else if(num==3){
+				//rightの画像を戻す
+				document.getElementById("btn_right").src="btn_right0.png";
+			}
+			else if(num==4){
+				//startの画像を戻す
+				document.getElementById("btn_start").src="button_start1.png";
 			}
 			return;
 		}
