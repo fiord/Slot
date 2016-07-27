@@ -267,34 +267,35 @@
 			var mid_right=array_right[(index_right+1)%21];
 			var low_right=array_right[(index_right+2)%21];
 			
+			
 			//mid-mid-mid
 			if(equals(mid_left,mid_center,mid_right)){
 				if(mid_left==0)	replay();
-				else if(mid_left>=5)	bonus(mid_left);
+				else if(mid_left>=7)	bonus(mid_left);
 				else	fluit(mid_left);
 			}
 			//up-up-up
 			else if(equals(up_left,up_center,up_right)){
 				if(up_left==0)	replay();
-				else if(up_left>=5)	bonus(up_left);
+				else if(up_left>=7)	bonus(up_left);
 				else	fluit(up_left);
 			}
 			//low-low-low
 			else if(equals(low_left,low_center,low_right)){
 				if(low_left==0)	replay();
-				else if(low_left>=5)	bonus(low_left);
+				else if(low_left>=7)	bonus(low_left);
 				else	fluit(low_left);
 			}
 			//up-mid-low
 			else if(equals(up_left,mid_center,low_right)){
 				if(up_left==0)	replay();
-				else if(up_left>=5)	bonus(up_left);
+				else if(up_left>=7)	bonus(up_left);
 				else	fluit(up_left);
 			}
 			//low-mid-up
 			else if(equals(low_left,mid_center,up_right)){
 				if(low_left==0)	replay();
-				else if(low_left>=5)	bonus(low_left);
+				else if(low_left>=7)	bonus(low_left);
 				else	fluit(low_left);
 			}
 			else {
@@ -307,13 +308,15 @@
 			return (a==b&&b==c?true:false);
 		}
 		/*
-			rep:0
-			banana:1
-			watermelon:2
-			orange:3
-			cherry:4
-			bar:5
-			seven:6
+					rep(0)			
+					orange(1)		
+					watermelon(2)	
+					apple(3)		
+					bell(4)			
+					grape(5)		
+					cherry(6)		
+					bar(7)			
+					seven(8)		
 		*/
 		function replay(){
 			document.getElementById("result").innerHTML="リプレイ";
@@ -328,7 +331,7 @@
 		}
 		
 		function fluit(num){
-			var str=["バナナ","スイカ","オレンジ","チェリー"];
+			var str=["オレンジ","スイカ","リンゴ","ベル","グレープ","チェリー"];
 			document.getElementById("result").innerHTML=str[num-1]+"が当たりました。"+use*5+"枚獲得。";
 			money+=use*5;	use=3;
 			return;
