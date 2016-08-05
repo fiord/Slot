@@ -1,0 +1,24 @@
+<html>
+<head>
+	<title>スロット</title>
+	<link rel="icon" type="image/png" href="blue.png">
+	<meta charset="utf-8">
+	<link rel="stylesheet" type="text/css" href="styles.css">
+</head>
+<body>
+<!-- 画像サイズは160x3680 -->
+	<div id="result" align="center">スロットゲーム</div>
+	<div id="time" align="right">残り時間:60秒</div>
+	<div id="money" align="right">所持コイン:50枚</div>
+	
+	<img id="left" src="reel_left.png" style="left:260px;top:30px;width:60px;height:1440px;clip:rect(0,60,180,0);position:absolute;"/>
+	<img id="center" src="reel_center.png" style="left:320px;top:30px;width:60px;height:1440px;clip:rect(0,60,180,0);position:absolute;">
+	<img id="right" src="reel_right.png" style="left:380px;top:-1230px;width:60px;height:1440px;clip:rect(1260,60,1440,0);position:absolute;">
+	
+	<img id="btn_left" src="btn_left0.png" style="left:260px;top:210px;width:60px;height:60px;position:absolute;" onmousedown="stop(1)" onmouseup="btn_release(1)">
+	<img id="btn_center" src="btn_center0.png" style="left:320px;top:210px;width:60px;height:60px;position:absolute;" onmousedown="stop(2)" onmouseup="btn_release(2)">
+	<img id="btn_right" src="btn_right0.png" style="left:380px;top:210px;width:60px;height:60px;position:absolute;" onmousedown="stop(3)" onmouseup="btn_release(3)">
+	<img id="btn_start" src="button_start1.png" style="left:450px;top:160px;width:60px;height:60px;position:absolute;" onmousedown="start()" onmouseup="btn_release(4)">
+	
+	<script type="text/javascript" src="game.js"></script>
+</body>
