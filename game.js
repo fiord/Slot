@@ -80,7 +80,7 @@ function money_update(){
 }
 
 function start(){	
-	document.getElementById("btn_start").src="button_start2.png";
+	document.getElementById("btn_start").src="pushed_btn.jpg";
 	if(started){
 		return;
 	}
@@ -94,6 +94,12 @@ function start(){
 	}
 	money_update();
 	
+	/*document.getElementById("light1").src="blue_btn.jpg";
+	document.getElementById("light2").src="green_btn.jpg";
+	document.getElementById("light3").src="yellow_btn.jpg";
+	document.getElementById("light4").src="green_btn.jpg";
+	document.getElementById("light5").src="blue_btn.jpg";
+	*/
 	//変数の初期化
 	started=true;
 	gaming=true;
@@ -144,11 +150,11 @@ function start(){
 		}
 		
 		//移動の適用
-		left.style.top=cur_left+30+"px";
+		left.style.top=cur_left+45+"px";
 		left.style.clip="rect("+(-cur_left)+",60,"+(-cur_left+180)+",0)";
-		center.style.top=cur_center+30+"px";
+		center.style.top=cur_center+45+"px";
 		center.style.clip="rect("+(-cur_center)+",60,"+(-cur_center+180)+",0)";
-		right.style.top=cur_right+30+"px";
+		right.style.top=cur_right+45+"px";
 		right.style.clip="rect("+(-cur_right)+",60,"+(-cur_right+180)+",0)";
 		
 		if(stop_left&&stop_center&&stop_right){
@@ -178,21 +184,21 @@ function stop(num){
 	if(num==1){
 		//leftを止める
 		flag_left=true;
-		document.getElementById("btn_left").src="btn_left1.png";
+		document.getElementById("btn_left").src="black_btn.jpg";
 		var move=Math.floor(bottom-cur_left)%60;
 		end_left=Math.min(cur_left+move,0);
 	}
 	else if(num==2){
 		//centerを止める
 		flag_center=true;
-		document.getElementById("btn_center").src="btn_center1.png";
+		document.getElementById("btn_center").src="black_btn.jpg";
 		var move=Math.ceil(bottom+cur_center)%60;
 		end_center=Math.max(cur_center-move,-bottom);
 	}
 	else if(num==3){
 		//rightを止める
 		flag_right=true;
-		document.getElementById("btn_right").src="btn_right1.png";
+		document.getElementById("btn_right").src="black_btn.jpg";
 		var move=Math.floor(bottom-cur_right)%60;
 		end_right=Math.min(cur_right+move,0);
 	}
@@ -202,24 +208,31 @@ function stop(num){
 function btn_release(num){
 	if(num==1){
 		//leftの画像を戻す
-		document.getElementById("btn_left").src="btn_left0.png";
+		document.getElementById("btn_left").src="red_btn.jpg";
 	}
 	else if(num==2){
 		//centerの画像を戻す
-		document.getElementById("btn_center").src="btn_center0.png";
+		document.getElementById("btn_center").src="red_btn.jpg";
 	}
 	else if(num==3){
 		//rightの画像を戻す
-		document.getElementById("btn_right").src="btn_right0.png";
+		document.getElementById("btn_right").src="red_btn.jpg";
 	}
 	else if(num==4){
 		//startの画像を戻す
-		document.getElementById("btn_start").src="button_start1.png";
+		document.getElementById("btn_start").src="start_btn.jpg";
 	}
 	return;
 }
 
 function end(){
+	
+	/*document.getElementById("light1").src="pushed_btn.jpg";
+	document.getElementById("light2").src="pushed_btn.jpg";
+	document.getElementById("light3").src="pushed_btn.jpg";
+	document.getElementById("light4").src="pushed_btn.jpg";
+	document.getElementById("light5").src="pushed_btn.jpg";
+	*/
 	/*
 	left: 	rep(0)		2,7,11,16,19,
 		orange(1)	1,6,9,13,17,
@@ -270,38 +283,138 @@ function end(){
 	var low_right=array_right[(index_right+2)%21];
 	
 	
+	var add=0;
+	boolean gorep=false;
+	boolean gobonus=false;
+	
 	//mid-mid-mid
-	if(equals(mid_left,mid_center,mid_right)){
-		if(mid_left==0)	replay();
-		else if(mid_left>=7)	bonus(mid_left);
-		else	fluit(mid_left);
+	/*if(equals(mid_left,mid_center,mid_right)){
+		var flush=0;
+		var shift=setInterval(function () {
+			if(flush%2==0){
+				document.getElementById("light3").src="yellow_btn.jpg";
+			}
+			else{
+				document.getElementById("light3").src="pushed_btn.jpg";
+			}
+			flush+=1;
+			if(flush>=9)	clearInterval(shift);
+		},100);
+		if(mid_left==0)	gorep=true;;
+		else if(mid_left>=7){
+			gobonus=true;	add+=use*20;
+		}
+		else{
+			add+=use*5;
+		}
 	}
 	//up-up-up
 	else if(equals(up_left,up_center,up_right)){
-		if(up_left==0)	replay();
-		else if(up_left>=7)	bonus(up_left);
-		else	fluit(up_left);
+		var flush=0;
+		var shift=setInterval(function () {
+			if(flush%2==0){
+				document.getElementById("light3").src="green_btn.jpg";
+			}
+			else{
+				document.getElementById("light3").src="pushed_btn.jpg";
+			}
+			flush+=1;
+			if(flush>=9)	clearInterval(shift);
+		},100);
+		if(up_left==0)	gorep=true;
+		else if(up_left>=7){
+			gobonus=true;	add+=use*20;
+		}
+		else{
+			add+=use*5;
+		}
 	}
 	//low-low-low
 	else if(equals(low_left,low_center,low_right)){
-		if(low_left==0)	replay();
-		else if(low_left>=7)	bonus(low_left);
-		else	fluit(low_left);
+		var flush=0;
+		var shift=setInterval(function () {
+			if(flush%2==0){
+				document.getElementById("light3").src="green_btn.jpg";
+			}
+			else{
+				document.getElementById("light3").src="pushed_btn.jpg";
+			}
+			flush+=1;
+			if(flush>=9)	clearInterval(shift);
+		},100);
+		if(low_left==0)	gorep=true;
+		else if(low_left>=7){
+			gobonus=true;	add+=use*20;
+		}
+		else{
+			add+=use*5;
+		}
 	}
 	//up-mid-low
 	else if(equals(up_left,mid_center,low_right)){
-		if(up_left==0)	replay();
-		else if(up_left>=7)	bonus(up_left);
-		else	fluit(up_left);
+		var flush=0;
+		var shift=setInterval(function () {
+			if(flush%2==0){
+				document.getElementById("light3").src="blue_btn.jpg";
+			}
+			else{
+				document.getElementById("light3").src="pushed_btn.jpg";
+			}
+			flush+=1;
+			if(flush>=9)	clearInterval(shift);
+		},100);
+		if(up_left==0)	gorep=true;
+		else if(up_left>=7){
+			gobonus=true;	add+=use*20;
+		}
+		else{
+			add+=use*5;
+		}
 	}
 	//low-mid-up
 	else if(equals(low_left,mid_center,up_right)){
-		if(low_left==0)	replay();
-		else if(low_left>=7)	bonus(low_left);
-		else	fluit(low_left);
+		var flush=0;
+		var shift=setInterval(function () {
+			if(flush%2==0){
+				document.getElementById("light3").src="blue_btn.jpg";
+			}
+			else{
+				document.getElementById("light3").src="pushed_btn.jpg";
+			}
+			flush+=1;
+			if(flush>=9)	clearInterval(shift);
+		},100);
+		if(low_left==0)	gorep=true;
+		else if(low_left>=7){
+			gobonus=true;	add+=use*20;
+		}
+		else{
+			add+=use*5;
+		}
 	}
-	else {
-		document.getElementById("result").innerHTML="残念!!はずれ!!!";
+	*/
+	
+	document.getElementById("result").innerHTML="";
+	if(add>0){
+		if(add>=use*20){
+			getElementById("result").innerHTML="大当たり!!"+add+"枚獲得";
+		}
+		else{
+			getElementById("result").innerHTML="当たり!!"+add+"枚獲得";
+		}
+	}
+	if(gorep){
+		getElementById("result").innerHTML+="　リプレイ";
+		started=false;
+		repFlag=true;
+		flag_left=flag_center=flag_right=false;
+		stop_left=stop_center=stop_right=false;
+		end_left=end_center=end_right=0;
+		money+=use;
+		setTimeout("start()",750);
+	}
+	else if(add<=0){
+		getElementById("result".innerHTML="残念!!はずれ!!");
 	}
 	return;
 }
@@ -320,31 +433,6 @@ function equals(a,b,c){
 		bar(7)		
 		seven(8)	
 */
-function replay(){
-	document.getElementById("result").innerHTML="リプレイ";
-	started=false;
-	repFlag=true;
-	flag_left=flag_center=flag_right=false;
-	stop_left=stop_center=stop_right=false;
-	end_left=end_center=end_right=0;
-	money+=use;
-	setTimeout("start()",750);
-	return;
-}
-
-function fluit(num){
-	var str=["オレンジ","スイカ","リンゴ","ベル","グレープ","チェリー"];
-	document.getElementById("result").innerHTML=str[num-1]+"が当たりました。"+use*5+"枚獲得。";
-	money+=use*5;	use=3;
-	return;
-}
-
-function bonus(num){
-	document.getElementById("result").innerHTML="大当たり!!!"+use*20+"枚獲得。";
-	money+=use*20;		
-	//モードチェンジの処理
-	return;
-}
 
 //ショートカットキーの実装
 document.onkeydown=function (e) {
