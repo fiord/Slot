@@ -94,12 +94,12 @@ function start(){
 	}
 	money_update();
 	
-	/*document.getElementById("light1").src="blue_btn.jpg";
+	document.getElementById("light1").src="blue_btn.jpg";
 	document.getElementById("light2").src="green_btn.jpg";
 	document.getElementById("light3").src="yellow_btn.jpg";
 	document.getElementById("light4").src="green_btn.jpg";
 	document.getElementById("light5").src="blue_btn.jpg";
-	*/
+	
 	//変数の初期化
 	started=true;
 	gaming=true;
@@ -227,12 +227,11 @@ function btn_release(num){
 
 function end(){
 	
-	/*document.getElementById("light1").src="pushed_btn.jpg";
+	document.getElementById("light1").src="pushed_btn.jpg";
 	document.getElementById("light2").src="pushed_btn.jpg";
 	document.getElementById("light3").src="pushed_btn.jpg";
 	document.getElementById("light4").src="pushed_btn.jpg";
 	document.getElementById("light5").src="pushed_btn.jpg";
-	*/
 	/*
 	left: 	rep(0)		2,7,11,16,19,
 		orange(1)	1,6,9,13,17,
@@ -284,11 +283,11 @@ function end(){
 	
 	
 	var add=0;
-	boolean gorep=false;
-	boolean gobonus=false;
+	var gorep=false;
+	var gobonus=false;
 	
 	//mid-mid-mid
-	/*if(equals(mid_left,mid_center,mid_right)){
+	if(equals(mid_left,mid_center,mid_right)){
 		var flush=0;
 		var shift=setInterval(function () {
 			if(flush%2==0){
@@ -300,7 +299,7 @@ function end(){
 			flush+=1;
 			if(flush>=9)	clearInterval(shift);
 		},100);
-		if(mid_left==0)	gorep=true;;
+		if(mid_left==0)	gorep=true;
 		else if(mid_left>=7){
 			gobonus=true;	add+=use*20;
 		}
@@ -313,10 +312,10 @@ function end(){
 		var flush=0;
 		var shift=setInterval(function () {
 			if(flush%2==0){
-				document.getElementById("light3").src="green_btn.jpg";
+				document.getElementById("light2").src="green_btn.jpg";
 			}
 			else{
-				document.getElementById("light3").src="pushed_btn.jpg";
+				document.getElementById("light2").src="pushed_btn.jpg";
 			}
 			flush+=1;
 			if(flush>=9)	clearInterval(shift);
@@ -334,10 +333,10 @@ function end(){
 		var flush=0;
 		var shift=setInterval(function () {
 			if(flush%2==0){
-				document.getElementById("light3").src="green_btn.jpg";
+				document.getElementById("light4").src="green_btn.jpg";
 			}
 			else{
-				document.getElementById("light3").src="pushed_btn.jpg";
+				document.getElementById("light4").src="pushed_btn.jpg";
 			}
 			flush+=1;
 			if(flush>=9)	clearInterval(shift);
@@ -355,10 +354,10 @@ function end(){
 		var flush=0;
 		var shift=setInterval(function () {
 			if(flush%2==0){
-				document.getElementById("light3").src="blue_btn.jpg";
+				document.getElementById("light1").src="blue_btn.jpg";
 			}
 			else{
-				document.getElementById("light3").src="pushed_btn.jpg";
+				document.getElementById("light1").src="pushed_btn.jpg";
 			}
 			flush+=1;
 			if(flush>=9)	clearInterval(shift);
@@ -376,10 +375,10 @@ function end(){
 		var flush=0;
 		var shift=setInterval(function () {
 			if(flush%2==0){
-				document.getElementById("light3").src="blue_btn.jpg";
+				document.getElementById("light5").src="blue_btn.jpg";
 			}
 			else{
-				document.getElementById("light3").src="pushed_btn.jpg";
+				document.getElementById("light5").src="pushed_btn.jpg";
 			}
 			flush+=1;
 			if(flush>=9)	clearInterval(shift);
@@ -392,19 +391,22 @@ function end(){
 			add+=use*5;
 		}
 	}
-	*/
 	
 	document.getElementById("result").innerHTML="";
 	if(add>0){
 		if(add>=use*20){
-			getElementById("result").innerHTML="大当たり!!"+add+"枚獲得";
+			document.getElementById("result").innerHTML="大当たり!!"+add+"枚獲得";
+			money+=add;
+			money_update()
 		}
 		else{
-			getElementById("result").innerHTML="当たり!!"+add+"枚獲得";
+			document.getElementById("result").innerHTML="当たり!!"+add+"枚獲得";
+			money+=add;
+			money_update()
 		}
 	}
 	if(gorep){
-		getElementById("result").innerHTML+="　リプレイ";
+		document.getElementById("result").innerHTML+="　リプレイ";
 		started=false;
 		repFlag=true;
 		flag_left=flag_center=flag_right=false;
@@ -414,7 +416,7 @@ function end(){
 		setTimeout("start()",750);
 	}
 	else if(add<=0){
-		getElementById("result".innerHTML="残念!!はずれ!!");
+		document.getElementById("result").innerHTML="残念!!はずれ!!";
 	}
 	return;
 }
