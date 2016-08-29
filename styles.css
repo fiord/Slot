@@ -1,4 +1,20 @@
-#main left{
-    left:260px;     top:30px;
-    width:60px;     height:1380px;clip:rect(0,60,180,0);position:absolute;
+span.money{
+	left:460px;
+	top:150px;
+	width:70px;
+	height:40px;
+	position:absolute;
+	color:red;
+	font-size:40px;
+	font-family:"Pocket Calculator";
+}
+span.time{
+	left:460px;
+	top:55px;
+	width:70px;
+	height:40px;
+	position:absolute;
+	color:red;
+	font-size:40px;
+	font-family:"Pocket Calculator";
 }

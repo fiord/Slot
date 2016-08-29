@@ -8,8 +8,10 @@
 <body>
 <!-- 画像サイズは160x3680 -->
 	<div id="result" align="center">スロットゲーム</div>
-	<div id="time" align="right">残り時間:60秒</div>
-	<div id="money" align="right">所持コイン:50枚</div>
+	<img id="time_back" src="time.png" style="left:450px;top:45px;width:90px;height:60px;position:absolute;"/>
+	<img id="money_back" src="score.png" style="left:450px;top:140px;width:90px;height:60px;position:absolute;"/>
+	<span id="time" class="time">60</span>
+	<span id="money" class="money">0050</span>
 	
 	<img id="left" src="reel_left.png" style="left:260px;top:45px;width:60px;height:1440px;clip:rect(0,60,180,0);position:absolute;"/>
 	<img id="center" src="reel_center.png" style="left:320px;top:45px;width:60px;height:1440px;clip:rect(0,60,180,0);position:absolute;">
@@ -18,7 +20,7 @@
 	<img id="btn_left" src="red_btn.jpg" style="left:265px;top:235px;width:50px;height:17px;position:absolute;" onmousedown="stop(1)" onmouseup="btn_release(1)">
 	<img id="btn_center" src="red_btn.jpg" style="left:325px;top:235px;width:50px;height:17px;position:absolute;" onmousedown="stop(2)" onmouseup="btn_release(2)">
 	<img id="btn_right" src="red_btn.jpg" style="left:385px;top:235px;width:50px;height:17px;position:absolute;" onmousedown="stop(3)" onmouseup="btn_release(3)">
-	<img id="btn_start" src="button_start1.png" style="left:450px;top:175px;width:60px;height:60px;position:absolute;" onmousedown="start()" onmouseup="btn_release(4)">
+	<img id="btn_start" src="start_btn.jpg" style="left:450px;top:214px;width:60px;height:60px;position:absolute;" onmousedown="start()" onmouseup="btn_release(4)">
 	
 	
 	<img id="light1" src="pushed_btn.jpg" style="left:220px;top:0px;width:30px;height:30px;position:absolute;"/>

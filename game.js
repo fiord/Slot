@@ -28,9 +28,9 @@ var cur_center=0;
 var cur_right=0;
 
 //速度指定
-var verocity_left=60*20/100.0;
-var verocity_center=-60*20/100.0;
-var verocity_right=60*20/100.0;
+var verocity_left=60*12/100.0;
+var verocity_center=-60*12/100.0;
+var verocity_right=60*12/100.0;
 
 //境界判定に使用
 var bottom=60*21;
@@ -48,6 +48,8 @@ var gameover_flag=false;
 onload=init();
 
 function init(){
+	document.getElementById("time").style.textAlign="center";
+	document.getElementById("money").style.textAlign="right";
 	money=input_money();
 	money_update();
 	time_left=60;
@@ -57,7 +59,7 @@ function init(){
 			clearInterval(a);
 		}
 		time_left-=1;
-		document.getElementById("time").innerHTML="残り時間:"+time_left+"秒";
+		document.getElementById("time").innerHTML=time_left;
 		if(time_left==0){
 			finish_flag=true;
 			if(!gaming)	finish();
@@ -75,7 +77,12 @@ function input_money(){
 }
 
 function money_update(){
-	document.getElementById("money").innerHTML="所持コイン:"+money+"枚";
+	if(money>=9999){
+		document.getElementById("money").innerHTML="9999";
+	}
+	else{
+		document.getElementById("money").innerHTML=("0000"+money).substr(-4);
+	}
 	return;
 }
 
@@ -439,18 +446,26 @@ function equals(a,b,c){
 //ショートカットキーの実装
 document.onkeydown=function (e) {
 	switch(e.keyCode){
-	case 97: stop(1);	break;
-	case 98: stop(2);	break;
-	case 99:	stop(3);	break;
-	case 101:	start();	break;
+		case 37: stop(1);	break;
+		case 45: stop(2);	break;
+		case 53: stop(3);	break;
+		case 60:	start();	break;
+		case 97: stop(1);	break;
+		case 98: stop(2);	break;
+		case 99:	stop(3);	break;
+		case 101:	start();	break;
 	}
 }
 
 document.onkeyup=function (e) {
-	switch(e.keyCode){
-	case 97: btn_release(1);	break;
-	case 98: btn_release(2);	break;
-	case 99:	btn_release(3);	break;
-	case 101:	btn_release(4);	break;
+	switch(e.keyCode){		
+		case 37: btn_release(1);	break;
+		case 45: btn_release(2);	break;
+		case 53: btn_release(3);	break;
+		case 60:	btn_release(4);	break;
+		case 97: btn_release(1);	break;
+		case 98: btn_release(2);	break;
+		case 99:	btn_release(3);	break;
+		case 101:	btn_release(4);	break;
 	}
 }
